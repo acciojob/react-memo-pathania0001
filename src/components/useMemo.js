@@ -1,23 +1,27 @@
-import React, { useMemo } from "react";
+import React, { useState, useMemo } from "react";
 
-export default function UseMemoExample({ counter }) {
-  // Expensive calculation example
+function UseMemoDemo() {
+  const [count, setCount] = useState(0);
+
   const expensiveCalculation = (num) => {
     console.log("Running expensive calculation...");
-    let total = 0;
-    for (let i = 0; i < 100000000; i++) {
-      total += num;
+    let result = 0;
+    for (let i = 0; i < 1000000; i++) {
+      result += num * 2;
     }
-    return total;
+    return result;
   };
 
-  // useMemo caches the result unless counter changes
-  const calculatedValue = useMemo(() => expensiveCalculation(counter), [counter]);
+  const calculatedValue = useMemo(() => expensiveCalculation(count), [count]);
 
   return (
-    <div style={{ marginTop: "20px" }}>
-      <h2>useMemo Example</h2>
-      <p>Calculated Value: {calculatedValue}</p>
+    <div>
+      <h2>UseMemo Demo</h2>
+      <p>Counter: {count}</p>
+      <button onClick={() => setCount(count + 1)}>Increment</button>
+      <p>Expensive Calculation Result: {calculatedValue}</p>
     </div>
   );
 }
+
+export default UseMemoDemo;
